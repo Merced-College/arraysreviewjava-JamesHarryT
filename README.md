@@ -6,12 +6,14 @@ As a group download and run the following BlackJack game Java code on this Good 
 
 You have a few options to run this code together:
 
-You can Fork this replit repositoryLinks to an external site. and share easily with your group for real-time collaboration by inviting members to collaborate on the repo - but after a while you will start being charged.
-You can have a Java IDE like Eclipse running on your desktop and run the code given above on the desktop computer in a working Java project.  You would then share your code on the desktop computer in real time.
-You can make a clone of this github classroom assignment, and then open this repo in Code Spaces, an online Java IDE.  Using the plugin called LiveShare you can share your code with your group members in real time.
+* You can Fork this replit repositoryLinks to an external site. and share easily with your group for real-time collaboration by inviting members to collaborate on the repo - but after a while you will start being charged.
+* You can have a Java IDE like Eclipse running on your desktop and run the code given above on the desktop computer in a working Java project.  You would then share your code on the desktop computer in real time.
+* You can make a clone of this github classroom assignment, and then open this repo in Code Spaces, an online Java IDE.
+  * Using the plugin called LiveShare you can share your code with your group members in real time. If LiveShare is not working, you can always share your screen via zoom.
+ 
 First choose which way you will open and share your code.
 
-Choose one of the enhancements listed below and work as a group to implement this functionality:
+Choose ONE of the enhancements listed below and work as a group to implement this functionality:
 
 * Multiple Rounds: Modify the code to allow the player to play multiple rounds, keeping track of wins, losses, and ties.
 * Betting System: Implement a betting system where the player starts with a certain amount of money and can bet on each hand.

@@ -2,7 +2,7 @@
 //Jessie Mendez Cruz
 //Parminder Singh
 //1.29.26
-//BlackJack enhcancement: 
+//BlackJack enhcancement: Handling Aces
 
 import java.util.Random;
 import java.util.Scanner;
@@ -13,7 +13,10 @@ public class BlackJack {
     private static final String[] RANKS = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King",
             "Ace" };
     private static final int[] DECK = new int[52];
-    private static boolean hasAce = false;
+    //Create variables in order to use ace enhancement correctly for dealer and player
+    // Harrison Tinley
+    private static boolean hasAce_D = false;
+    private static boolean hasAce_P = false;
     private static int currentCardIndex = 0;
 
     public static void main(String[] args) {
@@ -69,13 +72,14 @@ public class BlackJack {
         int card2 = dealCard();
         System.out.println("Your cards: " + RANKS[card1] + " of " + SUITS[DECK[currentCardIndex] % 4] + " and "
                 + RANKS[card2] + " of " + SUITS[card2 / 13]);
-        return cardValue(card1) + cardValue(card2);
+
+        return cardValue(card1, true) + cardValue(card2, true);
     }
 
     private static int dealInitialDealerCards() {
         int card1 = dealCard();
         System.out.println("Dealer's card: " + RANKS[card1] + " of " + SUITS[DECK[currentCardIndex] % 4]);
-        return cardValue(card1);
+        return cardValue(card1, false);
     }
 
     //Keeps adding new cards to player's total until they decide to "Stand"
@@ -86,7 +90,7 @@ public class BlackJack {
             String action = scanner.nextLine().toLowerCase();
             if (action.equals("hit")) {
                 int newCard = dealCard();
-                playerTotal += cardValue(newCard);
+                playerTotal += cardValue(newCard, true);
                 //Not useful for player to see
                 // Jessie Mendez Cruz
                 //System.out.println("new card index is " + newCard);
@@ -94,7 +98,7 @@ public class BlackJack {
                 if (playerTotal > 21) {
                     //Checks if player has an Ace and saves them from losing if so
                     //Harrison Tinley
-                    if (hasAce == true) {
+                    if (hasAce_P == true) {
                         playerTotal -= 10;
                     }
                     else {
@@ -116,12 +120,20 @@ public class BlackJack {
     private static int dealerTurn(int dealerTotal) {
         while (dealerTotal < 17) {
             int newCard = dealCard();
-            dealerTotal += cardValue(newCard);
+            dealerTotal += cardValue(newCard, false);
+            //dealer functionality for if the dealer pulls an ace.
+            // Harrison Tinley
+            if (dealerTotal > 21 && hasAce_D == true) {
+                dealerTotal -= 10;
+            }
         }
         System.out.println("Dealer's total is " + dealerTotal);
         return dealerTotal;
     }
-
+    // determines who the winner is, compares the player and dealer totals
+    // dealer goes over 21, the player wins
+    // otherwise it's either a tie, or dealer wins
+    // Parminder Singh
     private static void determineWinner(int playerTotal, int dealerTotal) {
         if (dealerTotal > 21 || playerTotal > dealerTotal) {
             System.out.println("You win!");
@@ -140,7 +152,7 @@ public class BlackJack {
     
     //Converts array values into what the card values actually are
     // Jessie Mendez Cruz && Harrison Tinley
-    private static int cardValue(int card) {
+    private static int cardValue(int card, boolean isPlayer) {
         //Rewritten in order to be more human readable
         //Harrison Tinley
         if (card < 9) {
@@ -148,12 +160,17 @@ public class BlackJack {
         }
         //adds a checker to see if the card is an Ace and then adds 11 to total
         //Harrison Tinley
-        else if (card == 13) {
-            hasAce = true;
-            //Add a notifier so that the player knows the ace is in the game
-            // and how it works.
-            //Jessie Mendez Cruz
-            System.out.println("You have an Ace! If you get over 21, it will be converted from 11 to 1.");
+        else if (card == 12) {
+            if (isPlayer == true) {
+                hasAce_P = true;
+                //Add a notifier so that the player knows the ace is in the game
+                // and how it works.
+                //Jessie Mendez Cruz
+                System.out.println("You have an Ace! If you get over 21, it will be converted from 11 to 1.");
+            }
+            else {
+                hasAce_D = true;
+            }
             return 11;
         }
         else {
